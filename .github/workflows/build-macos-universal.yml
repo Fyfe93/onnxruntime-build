@@ -1,0 +1,54 @@
+name: Build macOS Universal Static Library
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+          fetch-depth: 1
+
+      - name: Install dependencies
+        run: |
+          brew install cmake ninja
+
+      - name: Build for arm64
+        run: |
+          export CMAKE_BUILD_TYPE=Release
+          export CMAKE_OPTIONS="-DCMAKE_OSX_ARCHITECTURES=arm64 -Donnxruntime_BUILD_UNIT_TESTS=OFF -Donnxruntime_ENABLE_TRAINING=ON -Donnxruntime_ENABLE_TRAINING_OPS=ON -Donnxruntime_ENABLE_TRAINING_TORCH_INTEROP=ON"
+          ./build-static_lib.sh
+
+      - name: Build for x86_64
+        run: |
+          export CMAKE_BUILD_TYPE=Release
+          export CMAKE_OPTIONS="-DCMAKE_OSX_ARCHITECTURES=x86_64 -Donnxruntime_BUILD_UNIT_TESTS=OFF -Donnxruntime_ENABLE_TRAINING=ON -Donnxruntime_ENABLE_TRAINING_OPS=ON -Donnxruntime_ENABLE_TRAINING_TORCH_INTEROP=ON"
+          ./build-static_lib.sh
+
+      - name: Create universal binary
+        run: |
+          mkdir -p output/universal/lib
+          lipo -create output/static_lib/lib/libonnxruntime.a -arch arm64 output/static_lib/lib/libonnxruntime.a -arch x86_64 output/static_lib/lib/libonnxruntime.a -output output/universal/lib/libonnxruntime.a
+
+      - name: Copy headers
+        run: |
+          mkdir -p output/universal/include
+          cp -r output/static_lib/include/* output/universal/include/
+
+      - name: Create artifact
+        run: |
+          cd output/universal
+          tar -czf onnxruntime-macos-universal.tar.gz lib include
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: onnxruntime-macos-universal
+          path: output/universal/onnxruntime-macos-universal.tar.gz 
