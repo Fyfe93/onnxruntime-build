@@ -18,18 +18,18 @@ jobs:
 
       - name: Install dependencies
         run: |
-          brew install cmake ninja
+          brew install cmake ninja python@3.9
 
       - name: Build for arm64
         run: |
           export CMAKE_BUILD_TYPE=Release
-          export CMAKE_OPTIONS="-DCMAKE_OSX_ARCHITECTURES=arm64 -Donnxruntime_BUILD_UNIT_TESTS=OFF -Donnxruntime_ENABLE_TRAINING=ON -Donnxruntime_ENABLE_TRAINING_OPS=ON -Donnxruntime_ENABLE_TRAINING_TORCH_INTEROP=ON -DCMAKE_POLICY_VERSION_MINIMUM=3.5"
+          export CMAKE_OPTIONS="-DCMAKE_OSX_ARCHITECTURES=arm64 -Donnxruntime_BUILD_UNIT_TESTS=OFF -Donnxruntime_ENABLE_TRAINING=ON -Donnxruntime_ENABLE_TRAINING_OPS=ON -Donnxruntime_ENABLE_TRAINING_TORCH_INTEROP=ON -Donnxruntime_ENABLE_PYTHON=ON -DPYTHON_EXECUTABLE=$(which python3) -DCMAKE_POLICY_VERSION_MINIMUM=3.5"
           ./build-static_lib.sh
 
       - name: Build for x86_64
         run: |
           export CMAKE_BUILD_TYPE=Release
-          export CMAKE_OPTIONS="-DCMAKE_OSX_ARCHITECTURES=x86_64 -Donnxruntime_BUILD_UNIT_TESTS=OFF -Donnxruntime_ENABLE_TRAINING=ON -Donnxruntime_ENABLE_TRAINING_OPS=ON -Donnxruntime_ENABLE_TRAINING_TORCH_INTEROP=ON -DCMAKE_POLICY_VERSION_MINIMUM=3.5"
+          export CMAKE_OPTIONS="-DCMAKE_OSX_ARCHITECTURES=x86_64 -Donnxruntime_BUILD_UNIT_TESTS=OFF -Donnxruntime_ENABLE_TRAINING=ON -Donnxruntime_ENABLE_TRAINING_OPS=ON -Donnxruntime_ENABLE_TRAINING_TORCH_INTEROP=ON -Donnxruntime_ENABLE_PYTHON=ON -DPYTHON_EXECUTABLE=$(which python3) -DCMAKE_POLICY_VERSION_MINIMUM=3.5"
           ./build-static_lib.sh
 
       - name: Create universal binary
