@@ -108,7 +108,11 @@ jobs:
           ls -lh output/static_lib/include
           ls -lh output/static_lib/lib
 
+          # Copy CoreML provider header
           cp -v onnxruntime/include/onnxruntime/core/providers/coreml/coreml_provider_factory.h output/static_lib/include
+
+          # Copy training-related headers
+          cp -v onnxruntime/orttraining/orttraining/training_api/include/*.h output/static_lib/include/
 
           dst=onnxruntime-osx-universal2-static_lib-${ONNXRUNTIME_VERSION}
           mkdir $dst
