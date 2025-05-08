@@ -30,7 +30,7 @@ jobs:
 
       - name: Set up QEMU
         if: steps.cache-build-result.outputs.cache-hit != 'true'
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@v3
         with:
           platforms: all
 
