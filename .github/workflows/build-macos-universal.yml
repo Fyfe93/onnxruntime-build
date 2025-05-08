@@ -97,7 +97,7 @@ jobs:
           export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
 
           export TORCH_PATH=$(python3 -c "import torch; import os; print(os.path.dirname(torch.__file__))")
-          export CMAKE_OPTIONS="-Donnxruntime_USE_COREML=ON -DCMAKE_OSX_ARCHITECTURES='arm64;x86_64' --compile-no-warning-as-error -Donnxruntime_BUILD_UNIT_TESTS=OFF -DONNX_CUSTOM_PROTOC_EXECUTABLE=$GITHUB_WORKSPACE/bin/protoc -Donnxruntime_ENABLE_TRAINING=ON -Donnxruntime_ENABLE_TRAINING_OPS=ON -Donnxruntime_ENABLE_TRAINING_TORCH_INTEROP=ON -Donnxruntime_ENABLE_PYTHON=ON -DPYTHON_EXECUTABLE=$(which python3) -DTorch_DIR=$TORCH_PATH/share/cmake/Torch"
+          export CMAKE_OPTIONS="-Donnxruntime_USE_COREML=ON -DCMAKE_OSX_ARCHITECTURES='arm64;x86_64' --compile-no-warning-as-error -Donnxruntime_BUILD_UNIT_TESTS=OFF -DONNX_CUSTOM_PROTOC_EXECUTABLE=$GITHUB_WORKSPACE/bin/protoc -Donnxruntime_ENABLE_TRAINING=ON -Donnxruntime_ENABLE_TRAINING_OPS=ON -Donnxruntime_ENABLE_TRAINING_TORCH_INTEROP=ON -Donnxruntime_ENABLE_PYTHON=ON -DPYTHON_EXECUTABLE=$(which python3) -DTorch_DIR=$TORCH_PATH/share/cmake/Torch -DCMAKE_POLICY_VERSION_MINIMUM=3.5"
           ./build-static_lib.sh
 
       - name: Collect result
