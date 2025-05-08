@@ -48,7 +48,7 @@ jobs:
           tar -czf onnxruntime-macos-universal.tar.gz lib include
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: onnxruntime-macos-universal
           path: output/universal/onnxruntime-macos-universal.tar.gz 
