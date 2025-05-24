@@ -19,21 +19,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Install GitHub CLI
-        run: sudo apt-get update && sudo apt-get install -y gh
-
-      - name: Download artifact from specific workflow run
+      - name: Download artifact from another workflow run
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh auth setup-git
-          # Download the artifact from the specified workflow run
-          gh run download ${{ github.event.inputs.workflow_run_id }}
-          # List files for debugging
-          ls -l
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 123456789
+          repository: owner/repo
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          name: 3085434201
+
 
       - name: Create Release and Upload Asset
         uses: ncipollo/release-action@v1
