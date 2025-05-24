@@ -41,5 +41,3 @@ jobs:
           artifacts: "./onnxruntime-osx-universal2-static_lib-${{ github.event.inputs.version }}.zip"
           tag: v${{ github.event.inputs.version }}
           token: ${{ secrets.GITHUB_TOKEN }}
-
-          onnxruntime-osx-universal2-static_lib-${ONNXRUNTIME_VERSION}
