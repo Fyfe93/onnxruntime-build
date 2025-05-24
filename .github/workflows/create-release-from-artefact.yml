@@ -19,6 +19,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Install GitHub CLI
         run: sudo apt-get update && sudo apt-get install -y gh
 
@@ -27,9 +30,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "Listing artifacts for run ID: ${{ github.event.inputs.workflow_run_id }}"
-          gh run download ${{ github.event.inputs.workflow_run_id }} --dir /tmp/artifacts --pattern "*" || true
-          echo "Contents of /tmp/artifacts:"
-          ls -la /tmp/artifacts || true
+          gh auth setup-git
+          gh run view ${{ github.event.inputs.workflow_run_id }} --json artifacts
+          echo "Attempting to download artifacts..."
 
       - name: Download artifact from another workflow run
         env:
