@@ -1,0 +1,39 @@
+name: Release Artifact
+
+on:
+  workflow_dispatch:
+    inputs:
+      workflow_run_id:
+        description: "ID of the macos-universal2 workflow run"
+        required: true
+      version:
+        description: "Version of the release (e.g., 1.20.0)"
+        required: true
+
+jobs:
+  Release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install GitHub CLI
+        run: sudo apt-get update && sudo apt-get install -y gh
+
+      - name: Download artifact from specific workflow run
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh auth setup-git
+          # Download the artifact from the specified workflow run
+          gh run download ${{ github.event.inputs.workflow_run_id }} -n "onnxruntime-osx-universal2-static_lib-${{ github.event.inputs.version }}"
+          # List files for debugging
+          ls -l
+
+      - name: Create Release and Upload Asset
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "./onnxruntime-osx-universal2-static_lib-${{ github.event.inputs.version }}.zip"
+          tag: v${{ github.event.inputs.version }}
+          token: ${{ secrets.GITHUB_TOKEN }}
