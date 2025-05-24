@@ -10,6 +10,10 @@ on:
         description: "Version of the release (e.g., 1.20.0)"
         required: true
 
+permissions:
+  contents: write
+  actions: read
+
 jobs:
   Release:
     runs-on: ubuntu-latest
