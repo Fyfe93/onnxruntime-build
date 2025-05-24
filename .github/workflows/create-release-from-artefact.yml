@@ -1,4 +1,4 @@
-name: Release Artifact
+name: create-release-from-artefact
 
 on:
   workflow_dispatch:
@@ -31,7 +31,7 @@ jobs:
         run: |
           gh auth setup-git
           # Download the artifact from the specified workflow run
-          gh run download ${{ github.event.inputs.workflow_run_id }} -n "3085434201"
+          gh run download ${{ github.event.inputs.workflow_run_id }} -n "3085434201/onnxruntime-osx-universal2-static_lib-${ONNXRUNTIME_VERSION}.zip"
           # List files for debugging
           ls -l
 
