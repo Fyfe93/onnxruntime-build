@@ -24,10 +24,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         uses: actions/download-artifact@v4
         with:
-          run-id: 123456789
-          repository: owner/repo
+          run-id: ${{ github.event.inputs.workflow_run_id }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          name: 3085434201
+          name: "onnxruntime-osx-universal2-static_lib-${ONNXRUNTIME_VERSION}.zip"
 
 
       - name: Create Release and Upload Asset
