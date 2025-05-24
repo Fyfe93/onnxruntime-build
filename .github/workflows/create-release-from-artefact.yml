@@ -31,7 +31,7 @@ jobs:
         run: |
           gh auth setup-git
           # Download the artifact from the specified workflow run
-          gh run download ${{ github.event.inputs.workflow_run_id }} -n "onnxruntime-osx-universal2-static_lib-${{ github.event.inputs.version }}"
+          gh run download ${{ github.event.inputs.workflow_run_id }} -n "3085434201"
           # List files for debugging
           ls -l
 
@@ -41,3 +41,5 @@ jobs:
           artifacts: "./onnxruntime-osx-universal2-static_lib-${{ github.event.inputs.version }}.zip"
           tag: v${{ github.event.inputs.version }}
           token: ${{ secrets.GITHUB_TOKEN }}
+
+          onnxruntime-osx-universal2-static_lib-${ONNXRUNTIME_VERSION}
