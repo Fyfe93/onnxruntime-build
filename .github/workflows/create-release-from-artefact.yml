@@ -39,7 +39,7 @@ jobs:
         with:
           run-id: ${{ github.event.inputs.workflow_run_id }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          # name: "onnxruntime-osx-universal2-static_lib-${ONNXRUNTIME_VERSION}.zip"
+          name: "onnxruntime-osx-universal2-static_lib-${ONNXRUNTIME_VERSION}"
 
       - name: Display structure of downloaded files
         run: ls -R
