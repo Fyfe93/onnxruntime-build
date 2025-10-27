@@ -121,7 +121,7 @@ jobs:
           zip -r ${dst}.zip $dst/
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: onnxruntime-osx-universal2-static_lib-${ONNXRUNTIME_VERSION}
           path: onnxruntime-osx-universal2-static_lib* 
