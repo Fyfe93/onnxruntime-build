@@ -142,7 +142,7 @@ jobs:
 
           zip -r ${dst}.zip $dst/
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: sherpa-onnx-android-${{ matrix.arch }}
           path: ./onnxruntime*.zip
